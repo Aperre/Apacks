@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.apacks.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+    "PlayerMove",
+    "GameMenuScreenMixin",
+    "TickMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -37,7 +37,7 @@ public class ApackScreen extends Screen {
 		addButton(Main.flyIsEnabled,"Flight",(button -> {
 			Main.flyIsEnabled = !Main.flyIsEnabled;
 			client.player.getAbilities().allowFlying=Main.flyIsEnabled;
-			client.player.getAbilities().flying=Main.flyIsEnabled;
+			client.player.getAbilities().flying=false;
 			Main.LOGGER.info("Set flyIsEnabled to "+Main.flyIsEnabled);
 			button.setMessage(ToggleText(Main.flyIsEnabled,"Flight"));
 		}));

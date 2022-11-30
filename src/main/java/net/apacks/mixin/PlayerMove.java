@@ -19,6 +19,12 @@ class PlayerMove {
     private static double injectedz(double z) {
         return (EasyRounding.round(z*100))/100;
     }
+    /*
+    @ModifyVariable(method="Lnet/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket;<init>(DDDFFZZZ)V",at = @At("HEAD"),ordinal = 5)
+    private static boolean injectedog(boolean onGround) {
+        return onGround;
+    }
+    */
 }
 
 

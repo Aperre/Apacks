@@ -10,8 +10,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static net.apacks.Main.noFallIsEnabled;
-
 @Mixin(WorldRenderer.class)
 public class TickMixin {
     MinecraftClient client=MinecraftClient.getInstance();
@@ -31,11 +29,7 @@ public class TickMixin {
                 Main.LOGGER.info("(Flight) Bypass Flight detection");
             }
         }
-        //NoFall
-        if (noFallIsEnabled) {
-            if (client.player.getVelocity().getY() >= -3) {
-                client.player.setVelocity(client.player.getVelocity().subtract(0,-0.2D,0));
-            }
-        }
+
+
     }
 }
