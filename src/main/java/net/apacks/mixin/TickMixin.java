@@ -17,9 +17,9 @@ public class TickMixin {
     private int floatingTickCount = 0;
     @Inject(at=@At("HEAD"),method = "Lnet/minecraft/client/render/WorldRenderer;tick()V")
     public void tick(CallbackInfo ci) {
-        if (client.player==null) return;
+        assert client.player != null;
         //Flight
-        if (client.player.getAbilities().flying) {
+        if (client.player.getAbilities().flying && client.player.getAbilities().allowFlying) {
             if (client.player.getPos().getY() >= oldY - 0.0433D) {
                 floatingTickCount += 1;
             }
@@ -28,6 +28,8 @@ public class TickMixin {
                 PacketHelper.sendRelativePosition(0, -0.05D, 0);
                 Main.LOGGER.info("(Flight) Bypass Flight detection");
             }
+        } else if(Main.flyIsEnabled!=client.player.getAbilities().allowFlying) {
+            client.player.getAbilities().allowFlying=Main.flyIsEnabled;
         }
 
 
