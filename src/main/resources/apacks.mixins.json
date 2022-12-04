@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "PlayerMove",
+    "modifyPlayerMovePacketMixin",
+    "modifyVehicleMovePacketMixin",
     "GameMenuScreenMixin",
     "TickMixin"
   ],
