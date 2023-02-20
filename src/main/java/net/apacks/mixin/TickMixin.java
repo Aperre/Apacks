@@ -20,14 +20,15 @@ public class TickMixin {
         assert client.player != null;
         //Flight
         if (client.player.getAbilities().flying && client.player.getAbilities().allowFlying) {
-            if (client.player.getPos().getY() >= oldY - 0.0433D) {
+            if (client.player.getPos().getY() >= oldY - 0.05D) {
                 floatingTickCount += 1;
             }
-            oldY = client.player.getPos().getY();
+
             if ((floatingTickCount > 20) && client.player.world.getBlockState(new BlockPos(client.player.getPos().subtract(0, 0.05D, 0))).isAir()) {
-                PacketHelper.sendRelativePosition(0, -0.05D, 0);
+                PacketHelper.sendRelativePosition(0, (client.player.getPos().getY()-oldY)-0.1D, 0);
                 Main.LOGGER.info("(Flight) Bypass Flight detection");
             }
+            oldY = client.player.getPos().getY();
         } else if(Main.flyIsEnabled!=client.player.getAbilities().allowFlying) {
             client.player.getAbilities().allowFlying=Main.flyIsEnabled;
         }

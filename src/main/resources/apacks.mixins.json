@@ -9,7 +9,8 @@
     "modifyPlayerMovePacketMixin",
     "modifyVehicleMovePacketMixin",
     "GameMenuScreenMixin",
-    "TickMixin"
+    "TickMixin",
+    "PlayerESPMixin"
   ],
   "injectors": {
     "defaultRequire": 1

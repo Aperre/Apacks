@@ -20,8 +20,8 @@ public abstract class GameMenuScreenMixin extends Screen {
     @Inject(at=@At("HEAD"),method="initWidgets")
     private void initWidgets(CallbackInfo ci) {
         assert this.client != null;
-        this.addDrawableChild(new ButtonWidget(10,10,90,20, Text.literal("ApacksMenu"),(button ->
+        this.addDrawableChild(ButtonWidget.builder(Text.of("ApacksMenu"),(button ->
             this.client.setScreen(new ApackScreen(this,this.client.options)))
-        ));
+        ).dimensions(10,10,90,20).build());
     }
 }

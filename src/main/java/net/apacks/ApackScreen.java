@@ -4,7 +4,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.option.GameOptions;
 import net.minecraft.screen.ScreenTexts;
-import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 
 public class ApackScreen extends Screen {
@@ -15,19 +14,19 @@ public class ApackScreen extends Screen {
         this.parent = parent;
         this.settings = gameOptions;
     }
-	public MutableText ToggleText(boolean value,String name) {
+	public Text ToggleText(boolean value,String name) {
 		if(value)
-			return Text.literal(name+" is enabled");
+			return Text.of(name+" is enabled");
 		else
-			return Text.literal(name+" is disabled");
+			return Text.of(name+" is disabled");
 	}
 	public int currentButton = 0;
 	public void addButton(boolean value,String name, ButtonWidget.PressAction onPress){
-			this.addDrawableChild(new ButtonWidget(this.width / 4 - 30, 25*currentButton+30,100,20,ToggleText(value,name),onPress));
+			this.addDrawableChild(ButtonWidget.builder(ToggleText(value,name),onPress).dimensions(120, 25*currentButton+30,100,20).build());
 			currentButton +=1;
 	}
 	public void addButton(String name, ButtonWidget.PressAction onPress){
-		this.addDrawableChild(new ButtonWidget(this.width / 4 - 30, 25*currentButton+30,100,20,Text.literal(name),onPress));
+		this.addDrawableChild(ButtonWidget.builder(Text.of(name),onPress).dimensions( 120, 25*currentButton+30,100,20).build());
 		currentButton +=1;
 	}
 
@@ -36,6 +35,8 @@ public class ApackScreen extends Screen {
 		//Toggle Fly button
 		addButton(Main.flyIsEnabled,"Flight",(button -> {
 			Main.flyIsEnabled = !Main.flyIsEnabled;
+			assert client != null;
+			assert client.player != null;
 			client.player.getAbilities().allowFlying=Main.flyIsEnabled;
 			client.player.getAbilities().flying=false;
 			Main.LOGGER.info("Set flyIsEnabled to "+Main.flyIsEnabled);
@@ -54,9 +55,12 @@ public class ApackScreen extends Screen {
 
 
 		//Back button
-		this.addDrawableChild(new ButtonWidget(10, 10,90,20,
-			ScreenTexts.BACK,(button ->
-				this.client.setScreen(this.parent)
-		)));
+		this.addDrawableChild(ButtonWidget.builder(
+				ScreenTexts.BACK, (button ->
+				{
+					assert this.client != null;
+					this.client.setScreen(this.parent);
+				}
+				)).dimensions(10, 10,90,20).build());
 	}
 }
