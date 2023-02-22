@@ -24,7 +24,7 @@ public class TickMixin {
                 floatingTickCount += 1;
             }
 
-            if ((floatingTickCount > 20) && client.player.world.getBlockState(new BlockPos(client.player.getPos().subtract(0, 0.05D, 0))).isAir()) {
+            if ((floatingTickCount > 5) && client.player.world.getBlockState(new BlockPos(client.player.getPos().subtract(0, 0.05D, 0))).isAir()) {
                 PacketHelper.sendRelativePosition(0, (client.player.getPos().getY()-oldY)-0.1D, 0);
                 Main.LOGGER.info("(Flight) Bypass Flight detection");
             }

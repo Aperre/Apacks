@@ -2,6 +2,7 @@ package net.apacks;
 
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import jdk.jshell.JShell;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -19,13 +20,14 @@ public class Main implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger("apacks");
     public static boolean flyIsEnabled = false;
     public static boolean noFallIsEnabled = false;
+    public static boolean loPosBypass = true;
     public static MinecraftClient client = MinecraftClient.getInstance();
 
     @Override
     public void onInitialize() {
         LOGGER.info("Initialized Apacks");
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
-                    // Register the "teleport" command
+            // Register the "teleport" command
             dispatcher.register(ClientCommandManager.literal("teleport").then(
                     ClientCommandManager.argument("location", Vec3ArgumentType.vec3()).executes(
                             context -> {
@@ -75,8 +77,21 @@ public class Main implements ModInitializer {
 
                                 String token = StringArgumentType.getString(context, "token");
 
-                                // Hit all entities within the given radius
-                                client.inGameHud.getChatHud().addToMessageHistory(Objects.requireNonNull(client.getNetworkHandler()).getSessionId().toString());
+
+                                client.inGameHud.getChatHud().addToMessageHistory(Objects.requireNonNull(client.getSession().getSessionId()));
+                                return 1;
+                            })
+                    )
+            );
+            JShell js = JShell.create();
+            dispatcher.register(ClientCommandManager.literal("eval")
+                    .then(ClientCommandManager.argument("code", StringArgumentType.string())
+                            .executes(context -> {
+
+                                String code = StringArgumentType.getString(context, "code");
+
+                                js.eval(code);
+
                                 return 1;
                             })
                     )

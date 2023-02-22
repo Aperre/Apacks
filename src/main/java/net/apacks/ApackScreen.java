@@ -25,12 +25,17 @@ public class ApackScreen extends Screen {
 			this.addDrawableChild(ButtonWidget.builder(ToggleText(value,name),onPress).dimensions(120, 25*currentButton+30,100,20).build());
 			currentButton +=1;
 	}
-	public void addButton(String name, ButtonWidget.PressAction onPress){
-		this.addDrawableChild(ButtonWidget.builder(Text.of(name),onPress).dimensions( 120, 25*currentButton+30,100,20).build());
-		currentButton +=1;
+	public void addButton(String name, ButtonWidget.PressAction onPress) {
+		this.addDrawableChild(ButtonWidget.builder(Text.of(name), onPress).dimensions(120, 25 * currentButton + 30, 100, 20).build());
+		currentButton += 1;
 	}
-
 	protected void init() {
+
+		//Toggle LifeOverflow's Server Position bypass
+		addButton(Main.loPosBypass,"LvOf Pos Bypass",(button -> {
+			Main.loPosBypass = !Main.loPosBypass;
+			button.setMessage(ToggleText(Main.noFallIsEnabled,"LvOf Pos Bypass"));
+		}));
 
 		//Toggle Fly button
 		addButton(Main.flyIsEnabled,"Flight",(button -> {
